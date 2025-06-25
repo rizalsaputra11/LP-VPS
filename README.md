@@ -7,7 +7,7 @@ pip install -r requirements.txt
 ```
 
 ```
-docker build -t ubuntu-22.04-with-ssh -R $lpnodes:22:localhost:22 serveo.net .
+docker build -t ubuntu-22.04-with-tmate .
 ```
 
 ```
