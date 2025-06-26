@@ -388,9 +388,10 @@ async def nodedmin(interaction: discord.Interaction):
             current_embed = discord.Embed(
                 title="📊 All VM SERVER (Continued)",
                 description="Detailed information about all VPS instances",
-                color=0x00aaff
+                color=0x9B59B6
+                
             )
-           field_count = 0
+            field_count = 0
         
         if len(parts) >= 8:
             user, container_name, ssh_command, ram, cpu, creator, os_type, expiry = parts
