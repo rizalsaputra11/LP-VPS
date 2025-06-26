@@ -973,7 +973,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         dm_embed.add_field(name="🧊 Container Name", value=container_name, inline=False)
         dm_embed.add_field(name="💾 Storage", value=f"10000 GB (Shared storage)", inline=True)
         dm_embed.add_field(name="🔒 Password", value="hk-i9", inline=False)
-  DM      
+        
         dm_embed.set_footer(text="Keep this information safe and private!")
         
         # Try to send DM to target user
