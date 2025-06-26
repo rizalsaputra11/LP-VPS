@@ -98,7 +98,13 @@ def get_container_stats(container_id):
         
         # Get CPU usage
         cpu_stats = subprocess.check_output(["docker", "stats", container_id, "--no-stream", "--format", "{{.CPUPerc}}"]).decode().strip()
+        # got stafus
         
+        statuses = [
+            f"🌌 Managing {instance_count} Cloud Instances",
+            f"⚡ Powering {instance_count} Servers",
+            f"🔮 Watching over {instance_count} VMs"
+        ]
         # Get container status
         status = subprocess.check_output(["docker", "inspect", "--format", "{{.State.Status}}", container_id]).decode().strip()
         
