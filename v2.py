@@ -17,13 +17,13 @@ from datetime import datetime, timedelta
 from typing import Optional, Literal
 
 TOKEN = ''
-RAM_LIMIT = '6g'
+RAM_LIMIT = '64g'
 SERVER_LIMIT = 1
 database_file = 'database.txt'
 PUBLIC_IP = '138.68.79.95'
 
 # Admin user IDs - add your admin user IDs here
-ADMIN_IDS = [1339181629855502418,1368602087520473140]  # Replace with actual admin IDs
+ADMIN_IDS = [1258646055860568094,1330372816926670979,951418376230670336,1295737579840340032]  # Replace with actual admin IDs
 
 intents = discord.Intents.default()
 intents.messages = False
@@ -252,7 +252,7 @@ class ConfirmView(View):
                 embed = discord.Embed(
                     title=" All VPS Instances Deleted",
                     description=f"Successfully deleted {deleted_count} VPS instances.",
-                    color=0xc00ff
+                    color=0x00ff00
                 )
                 # Use followup instead of edit_message
                 await interaction.followup.send(embed=embed)
@@ -271,7 +271,7 @@ class ConfirmView(View):
                     embed = discord.Embed(
                         title=" VPS Deleted",
                         description=f"Successfully deleted VPS instance `{self.container_name}`.",
-                        color=0xc00ff
+                        color=0x00ff00
                     )
                     # Use followup instead of edit_message
                     await interaction.followup.send(embed=embed)
@@ -284,7 +284,7 @@ class ConfirmView(View):
                     embed = discord.Embed(
                         title="❌ Error",
                         description=f"Failed to delete VPS instance: {str(e)}",
-                        color=0xc00ff
+                        color=0xff0000
                     )
                     await interaction.followup.send(embed=embed)
         except Exception as e:
@@ -302,7 +302,7 @@ class ConfirmView(View):
         embed = discord.Embed(
             title="🚫 Operation Cancelled",
             description="The delete operation has been cancelled.",
-            color=0xc00ff
+            color=0xffaa00
         )
         # Use followup instead of edit_message
         await interaction.followup.send(embed=embed)
@@ -327,7 +327,7 @@ async def change_status():
         else:
             instance_count = 0
 
-        status = f"🔮 Watching Over {instance_count} VM's"
+        status = f"🔮 Watching  Over {instance_count} VM's"
         await bot.change_presence(activity=discord.Game(name=status))
     except Exception as e:
         print(f"Failed to update status: {e}")
@@ -338,7 +338,7 @@ async def nodedmin(interaction: discord.Interaction):
         embed = discord.Embed(
             title="❌ Access Denied",
             description="You don't have permission to use this command.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
         return
@@ -350,7 +350,7 @@ async def nodedmin(interaction: discord.Interaction):
         embed = discord.Embed(
             title="VPS Instances",
             description="No VPS data available.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=embed)
         return
@@ -358,7 +358,7 @@ async def nodedmin(interaction: discord.Interaction):
     embed = discord.Embed(
         title="All VPS Instances",
         description="Detailed information about all VPS instances",
-        color=0xc00ff
+        color=0x00aaff
     )
     
     with open(database_file, 'r') as f:
@@ -378,7 +378,7 @@ async def nodedmin(interaction: discord.Interaction):
             current_embed = discord.Embed(
                 title="📊 All VPS Instances (Continued)",
                 description="Detailed information about all VPS instances",
-                color=0xc00ff
+                color=0x00aaff
             )
             field_count = 0
         
@@ -485,7 +485,7 @@ async def regen_ssh_command(interaction: discord.Interaction, container_name: st
         embed = discord.Embed(
             title="❌ Error",
             description=f"Error executing tmate in Docker container: {e}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed)
         return
@@ -523,14 +523,14 @@ async def regen_ssh_command(interaction: discord.Interaction, container_name: st
         success_embed = discord.Embed(
             title="✅ SSH Session Regenerated",
             description="New SSH session generated. Check your DMs for details.",
-            color=0xc00ff
+            color=0x00ff00
         )
         await interaction.response.send_message(embed=success_embed)
     else:
         error_embed = discord.Embed(
             title="❌ Failed",
             description="Failed to generate new SSH session.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=error_embed)
 
@@ -542,7 +542,7 @@ async def start_server(interaction: discord.Interaction, container_name: str):
         embed = discord.Embed(
             title="❌ Not Found",
             description="No instance found with that name for your user.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed)
         return
@@ -589,7 +589,7 @@ async def start_server(interaction: discord.Interaction, container_name: str):
                 success_embed = discord.Embed(
                     title="✅ VPS Started",
                     description=f"Your VPS instance `{container_name}` has been started. Check your DMs for connection details.",
-                    color=0xc00ff
+                    color=0x00ff00
                 )
                 await interaction.followup.send(embed=success_embed)
             except discord.Forbidden:
@@ -597,7 +597,7 @@ async def start_server(interaction: discord.Interaction, container_name: str):
                 warning_embed = discord.Embed(
                     title="⚠️ Cannot Send DM",
                     description="Your VPS has been started, but I couldn't send you a DM with the connection details. Please enable DMs from server members.",
-                    color=0xc00ff
+                    color=0xffaa00
                 )
                 warning_embed.add_field(
                     name="🔑 SSH Connection Command",
@@ -609,14 +609,14 @@ async def start_server(interaction: discord.Interaction, container_name: str):
             error_embed = discord.Embed(
                 title="⚠️ Partial Success",
                 description="VPS started, but failed to get SSH session line.",
-                color=0xc00ff
+                color=0xffaa00
             )
             await interaction.followup.send(embed=error_embed)
     except subprocess.CalledProcessError as e:
         error_embed = discord.Embed(
             title="❌ Error",
             description=f"Error starting VPS instance: {e}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
 
@@ -628,7 +628,7 @@ async def stop_server(interaction: discord.Interaction, container_name: str):
         embed = discord.Embed(
             title="❌ Not Found",
             description="No instance found with that name for your user.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed)
         return
@@ -640,14 +640,14 @@ async def stop_server(interaction: discord.Interaction, container_name: str):
         success_embed = discord.Embed(
             title="⏹️ VPS Stopped",
             description=f"Your VPS instance `{container_name}` has been stopped. You can start it again with `/start {container_name}`",
-            color=0xc00ff
+            color=0x00ff00
         )
         await interaction.followup.send(embed=success_embed)
     except subprocess.CalledProcessError as e:
         error_embed = discord.Embed(
             title="❌ Error",
             description=f"Failed to stop VPS instance: {str(e)}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
 
@@ -659,7 +659,7 @@ async def restart_server(interaction: discord.Interaction, container_name: str):
         embed = discord.Embed(
             title="❌ Not Found",
             description="No instance found with that name for your user.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed)
         return
@@ -691,7 +691,7 @@ async def restart_server(interaction: discord.Interaction, container_name: str):
             dm_embed = discord.Embed(
                 title="🔄 VPS Restarted",
                 description=f"Your VPS instance `{container_name}` has been restarted successfully.",
-                color=0xc00ff
+                color=0x00ff00
             )
             dm_embed.add_field(
                 name="🔑 SSH Connection Command",
@@ -714,7 +714,7 @@ async def restart_server(interaction: discord.Interaction, container_name: str):
                 warning_embed = discord.Embed(
                     title="⚠️ Cannot Send DM",
                     description="Your VPS has been restarted, but I couldn't send you a DM with the connection details. Please enable DMs from server members.",
-                    color=0xc00ff
+                    color=0xffaa00
                 )
                 warning_embed.add_field(
                     name="🔑 SSH Connection Command",
@@ -726,14 +726,14 @@ async def restart_server(interaction: discord.Interaction, container_name: str):
             error_embed = discord.Embed(
                 title="⚠️ Partial Success",
                 description="VPS restarted, but failed to get SSH session line.",
-                color=0xc00ff
+                color=0xffaa00
             )
             await interaction.followup.send(embed=error_embed)
     except subprocess.CalledProcessError as e:
         error_embed = discord.Embed(
             title="❌ Error",
             description=f"Error restarting VPS instance: {e}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
 
@@ -751,9 +751,9 @@ async def capture_output(process, keyword):
 @app_commands.describe(container_name="The name of the container", container_port="The port in the container")
 async def port_add(interaction: discord.Interaction, container_name: str, container_port: int):
     embed = discord.Embed(
-        title="🥃 Geting IPV4",
-        description="Setting up IPV4. This might take a moment...",
-        color=0xc00ff
+        title="🔄 Setting Up IPV4 Forwarding",
+        description="Setting up port forwarding. This might take a moment...",
+        color=0x00aaff
     )
     await interaction.response.send_message(embed=embed)
 
@@ -772,9 +772,9 @@ async def port_add(interaction: discord.Interaction, container_name: str, contai
 
         # Respond with the port and public IP
         success_embed = discord.Embed(
-            title="✅ IPV4 ARE HERE",
+            title="✅ Get IPV4 Successful",
             description=f"Your service is now accessible from the internet.",
-            color=0xc00ff
+            color=0x00ff00
         )
         success_embed.add_field(
             name="🌐 Connection Details",
@@ -787,7 +787,7 @@ async def port_add(interaction: discord.Interaction, container_name: str, contai
         error_embed = discord.Embed(
             title="❌ Error",
             description=f"An unexpected error occurred: {e}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
 
@@ -797,7 +797,7 @@ async def port_forward_website(interaction: discord.Interaction, container_name:
     embed = discord.Embed(
         title="🔄 Setting Up HTTP Forwarding",
         description="Setting up HTTP forwarding. This might take a moment...",
-        color=0xc00ff
+        color=0x00aaff
     )
     await interaction.response.send_message(embed=embed)
     
@@ -812,7 +812,7 @@ async def port_forward_website(interaction: discord.Interaction, container_name:
             url = url_line.split(" ")[-1]
             success_embed = discord.Embed(                title="✅ HTTP Forwarding Successful",
                 description=f"Your web service is now accessible from the internet.",
-                color=0xc00ff
+                color=0x00ff00
             )
             success_embed.add_field(
                 name="🌐 Website URL",
@@ -824,20 +824,20 @@ async def port_forward_website(interaction: discord.Interaction, container_name:
             error_embed = discord.Embed(
                 title="❌ Error",
                 description="Failed to set up HTTP forwarding. Please try again later.",
-                color=0xc00ff
+                color=0xff0000
             )
             await interaction.followup.send(embed=error_embed)
     except Exception as e:
         error_embed = discord.Embed(
             title="❌ Error",
             description=f"An unexpected error occurred: {e}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
 
 @bot.tree.command(name="deploy", description="🚀 Admin: Deploy a new VPS instance")
 @app_commands.describe(
-    ram="RAM allocation in GB (max 16gb)",
+    ram="RAM allocation in GB (max 100gb)",
     cpu="CPU cores (max 24)",
     target_user="Discord user ID to assign the VPS to",
     container_name="Custom container name (default: auto-generated)",
@@ -845,8 +845,8 @@ async def port_forward_website(interaction: discord.Interaction, container_name:
 )
 async def deploy(
     interaction: discord.Interaction, 
-    ram: int = 16000000, 
-    cpu: int = 400, 
+    ram: int = 16073727272727272827200, 
+    cpu: int = 40, 
     target_user: str = None,
     container_name: str = None,
     expiry: str = None
@@ -856,16 +856,16 @@ async def deploy(
         embed = discord.Embed(
             title="❌ Access Denied",
             description="You don't have permission to use this command.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
         return
     
     # Validate parameters
-    if ram > 9999999999999999999999999:
-        ram = 9999999999999999999999999
-    if cpu > 9999999999999999999999999:
-        cpu = 9999999999999999999999999
+    if ram > 160027277272727272720:
+        ram = 90002772727272727370
+    if cpu > 4072727:
+        cpu = 926260
     
     # Set target user
     user_id = target_user if target_user else str(interaction.user.id)
@@ -885,7 +885,7 @@ async def deploy(
     embed = discord.Embed(
         title="**🖥️ Select Operating System**",
         description="** 🔍 Please select the operating system for your VPS instance **",
-        color=0xc00ff
+        color=0x00aaff
     )
     
     async def os_selected_callback(interaction, selected_os):
@@ -897,13 +897,13 @@ async def deploy(
 async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, container_name, expiry_date):
     # Prepare response
     embed = discord.Embed(
-        title="**🛠️ Creating VPS**",
+        title="⚙️ Creating VM",
         description=f"**💾 RAM: {ram}GB\n**"
                     f"**🔥 CPU: {cpu} cores\n**"
                     f" 🧊**OS:** {os_type}\n"
                     f"**🧊 conatiner name: {user}\n**"
                     f"**⌚ Expiry: {expiry_date if expiry_date else 'None'}**",
-        color=0xc00ff
+        color=0x00ff00
     )
     await interaction.followup.send(embed=embed)
     
@@ -925,7 +925,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         error_embed = discord.Embed(
             title="❌ Error",
             description=f"Error creating Docker container: {e}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
         return
@@ -937,7 +937,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         error_embed = discord.Embed(
             title="❌ Error",
             description=f"Error executing tmate in Docker container: {e}",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
         
@@ -962,17 +962,18 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         
         # Create a DM embed with detailed information
         dm_embed = discord.Embed(
-            description=f"**✅ VM CREATE USING LP NODES**",
-            color=0xc00ff
+            description=f"**✅ VPS created successfully. Check your DM for details.**",
+            color=0x00ff00
         )
         
         
-        dm_embed.add_field(name="🔑 SSH Connection Command", value=f"```{ssh_session_line}```", inline=False)
+    **dm_embed.add_field(name="🔑 SSH Connection Command", value=f"```{ssh_session_line}```", inline=False)
         dm_embed.add_field(name="💾 RAM Allocation", value=f"{ram}GB", inline=True)
         dm_embed.add_field(name="🔥 CPU Cores", value=f"{cpu} cores", inline=True)
         dm_embed.add_field(name="🧊 Container Name", value=container_name, inline=False)
         dm_embed.add_field(name="💾 Storage", value=f"10000 GB (Shared storage)", inline=True)
         dm_embed.add_field(name="🔒 Password", value="hk-i9", inline=False)
+        dm_embed.add_field(name="🌐 Operating System", value=os_type_to_display_name(os_type), inline=False)**
         
         dm_embed.set_footer(text="Keep this information safe and private!")
         
@@ -984,9 +985,9 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
             
             # Public success message
             success_embed = discord.Embed(
-                title="**⚙️ Creating VM**",
+                title="**⛈️ VM WAS CREATE**",
                 description=f"** 🎉 VPS instance has been created for <@{user_id}>. They should check their DMs for connection details.**",
-                color=0xc00ff
+                color=0x00ff00
             )
             await interaction.followup.send(embed=success_embed)
             
@@ -995,7 +996,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
             warning_embed = discord.Embed(
                 title="**🔍 Cannot Send DM**",
                 description=f"**VPS has been created, but I couldn't send a DM with the connection details to <@{user_id}>. Please enable DMs from server members.**",
-                color=0xc00ff
+                color=0xffaa00
             )
             warning_embed.add_field(name="🔑 SSH Connection Command", value=f"```{ssh_session_line}```", inline=False)
             await interaction.followup.send(embed=warning_embed)
@@ -1010,7 +1011,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         error_embed = discord.Embed(
             title="❌ Deployment Failed",
             description="Failed to establish SSH session. The container has been cleaned up. Please try again.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.followup.send(embed=error_embed)
 
@@ -1089,7 +1090,7 @@ class TipsView(View):
         embed = discord.Embed(
             title=tip["title"],
             description=tip["description"],
-            color=0xc00ff
+            color=0x00aaff
         )
         embed.set_footer(text=f"Tip {self.current_page + 1}/{len(self.tips)}")
         return embed
@@ -1110,7 +1111,7 @@ async def delete_server(interaction: discord.Interaction, container_name: str):
         embed = discord.Embed(
             title="❌ Not Found",
             description="No instance found with that name for your user.",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed)
         return
@@ -1119,7 +1120,7 @@ async def delete_server(interaction: discord.Interaction, container_name: str):
     confirm_embed = discord.Embed(
         title="**⚠️ Confirm Deletion**",
         description=f"**Are you sure you want to delete VPS instance `{container_name}`? This action cannot be undone.**",
-        color=0xc00ff
+        color=0xffaa00
     )
     
     view = ConfirmView(container_id, container_name)
@@ -1132,7 +1133,7 @@ async def delete_all_servers(interaction: discord.Interaction):
         embed = discord.Embed(
             title="**❌ Access Denied**",
             description="**You don't have permission to use this command.**",
-            color=0xc00ff
+            color=0xff0000
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
         return
@@ -1144,7 +1145,7 @@ async def delete_all_servers(interaction: discord.Interaction):
     confirm_embed = discord.Embed(
         title="**⚠️ Confirm Mass Deletion**",
         description=f"**Are you sure you want to delete ALL {len(containers)} VPS instances? This action cannot be undone.**",
-        color=0xc00ff
+        color=0xffaa00
     )
     
     view = ConfirmView(None, None, is_delete_all=True)
@@ -1162,6 +1163,9 @@ async def list_servers(interaction: discord.Interaction):
             title="**📋 Your VPS Instances",
             description="**You don't have any VPS instances. Use `/deploy` to create one!**",
             color=0x00aaff
+        )
+        await interaction.followup.send(embed=embed)
+        return
 
     embed = discord.Embed(
         title="**📋 Your VPS Instances**",
@@ -1241,7 +1245,7 @@ async def help_command(interaction: discord.Interaction):
     embed = discord.Embed(
         title="**🌟 VPS Bot Help**",
         description="** Here are all the available commands:**",
-        color=0xc00ff
+        color=0x00aaff
     )
     
     # User commands
@@ -1259,7 +1263,6 @@ async def help_command(interaction: discord.Interaction):
     embed.add_field(name="/port-add <container_name> <port>", value="Forward a port", inline=True)
     embed.add_field(name="/port-http <container_name> <port>", value="Forward HTTP traffic", inline=True)
     embed.add_field(name="/ping", value="Check bot latency", inline=True)
-    embed.add_field(name="/botinfo", value="Check bot Developer", inline=True)
     
     # Admin commands
     if interaction.user.id in ADMIN_IDS:
