@@ -314,7 +314,7 @@ class ConfirmView(View):
 @bot.event
 async def on_ready():
     change_status.start()
-    print(f'🚀 Bot is ready. Logged in as {bot.user}')
+    print(f'🚀 your bot is ready. Logged in as {bot.user}')
     await bot.tree.sync()
 
 @tasks.loop(seconds=5)
@@ -356,7 +356,7 @@ async def nodedmin(interaction: discord.Interaction):
         return
 
     embed = discord.Embed(
-        title="All VPS Instances",
+        title="All VM SERVER",
         description="Detailed information about all VPS instances",
         color=0x00aaff
     )
@@ -376,7 +376,7 @@ async def nodedmin(interaction: discord.Interaction):
         if field_count >= 25:
             embeds.append(current_embed)
             current_embed = discord.Embed(
-                title="📊 All VPS Instances (Continued)",
+                title="📊 All VM SERVER (Continued)",
                 description="Detailed information about all VPS instances",
                 color=0x00aaff
             )
@@ -447,7 +447,7 @@ async def node_stats(interaction: discord.Interaction):
     )
     
     embed.add_field(
-        name=f"🧊 VPS Instances ({len(containers)})",
+        name=f"⚡ Watching over VM  ({len(containers)})",
         value="List of all VPS instances and their status:",
         inline=False
     )
@@ -772,12 +772,12 @@ async def port_add(interaction: discord.Interaction, container_name: str, contai
 
         # Respond with the port and public IP
         success_embed = discord.Embed(
-            title="✅ Port Forwarding Successful",
+            title="✅ Share IPV4 Here",
             description=f"Your service is now accessible from the internet.",
             color=0x00ff00
         )
         success_embed.add_field(
-            name="🌐 Connection Details",
+            name="🌐 share ipv4",
             value=f"**Host:** {PUBLIC_IP}\n**Port:** {public_port}",
             inline=False
         )
@@ -837,7 +837,7 @@ async def port_forward_website(interaction: discord.Interaction, container_name:
 
 @bot.tree.command(name="deploy", description="🚀 Admin: Deploy a new VPS instance")
 @app_commands.describe(
-    ram="RAM allocation in GB (max 16gb)",
+    ram="RAM allocation in GB (max 60000gb)",
     cpu="CPU cores (max 24)",
     target_user="Discord user ID to assign the VPS to",
     container_name="Custom container name (default: auto-generated)",
@@ -862,8 +862,8 @@ async def deploy(
         return
     
     # Validate parameters
-    if ram > 16000:
-        ram = 90000
+    if ram > 2000000:
+        ram = 9000000
     if cpu > 40:
         cpu = 90
     
@@ -984,8 +984,8 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
             
             # Public success message
             success_embed = discord.Embed(
-                title="**✅ Create VPS hk-i10 Successfully**",
-                description=f"** 🎉 VPS instance has been created for <@{user_id}>. They should check their DMs for connection details.**",
+                title="**✅ Your VPS Has Create Successfully Powered by LP NODES**",
+                description=f"** 🎉 VM SERVER has been created for <@{user_id}>. They should check their DMs for connection details.**",
                 color=0x00ff00
             )
             await interaction.followup.send(embed=success_embed)
@@ -1233,7 +1233,7 @@ async def restart(interaction: discord.Interaction, container_name: str):
 async def ping(interaction: discord.Interaction):
     latency = round(bot.latency * 1000)
     embed = discord.Embed(
-        title="🏓 Pong!",
+        title="🏓 MS!",
         description=f"Latency: {latency}ms",
         color=0x00ff00
     )
