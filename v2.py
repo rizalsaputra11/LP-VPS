@@ -1162,9 +1162,6 @@ async def list_servers(interaction: discord.Interaction):
             title="**📋 Your VPS Instances",
             description="**You don't have any VPS instances. Use `/deploy` to create one!**",
             color=0x00aaff
-       )
-       await interaction.response.send_message(embed=embed)
-        return
 
     embed = discord.Embed(
         title="**📋 Your VPS Instances**",
