@@ -17,13 +17,13 @@ from datetime import datetime, timedelta
 from typing import Optional, Literal
 
 TOKEN = ''
-RAM_LIMIT = '64g'
+RAM_LIMIT = '6g'
 SERVER_LIMIT = 1
 database_file = 'database.txt'
 PUBLIC_IP = '138.68.79.95'
 
 # Admin user IDs - add your admin user IDs here
-ADMIN_IDS = [1258646055860568094,1330372816926670979,951418376230670336,1295737579840340032]  # Replace with actual admin IDs
+ADMIN_IDS = [1368602087520473140]  # Replace with actual admin IDs
 
 intents = discord.Intents.default()
 intents.messages = False
@@ -252,7 +252,7 @@ class ConfirmView(View):
                 embed = discord.Embed(
                     title=" All VPS Instances Deleted",
                     description=f"Successfully deleted {deleted_count} VPS instances.",
-                    color=0x00ff00
+                    color=0x2400ff
                 )
                 # Use followup instead of edit_message
                 await interaction.followup.send(embed=embed)
@@ -271,7 +271,7 @@ class ConfirmView(View):
                     embed = discord.Embed(
                         title=" VPS Deleted",
                         description=f"Successfully deleted VPS instance `{self.container_name}`.",
-                        color=0x00ff00
+                        color=0x2400ff
                     )
                     # Use followup instead of edit_message
                     await interaction.followup.send(embed=embed)
@@ -284,7 +284,7 @@ class ConfirmView(View):
                     embed = discord.Embed(
                         title="❌ Error",
                         description=f"Failed to delete VPS instance: {str(e)}",
-                        color=0xff0000
+                        color=0x2400ff
                     )
                     await interaction.followup.send(embed=embed)
         except Exception as e:
