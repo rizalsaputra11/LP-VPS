@@ -429,19 +429,21 @@ async def node_stats(interaction: discord.Interaction):
     containers = get_all_containers()
     
     embed = discord.Embed(
-        title="🖥️ System Resource Usage",
-        description="Current resource usage of the host system",
+        title="📊 Panel Node Dashboard",
+        description="**Status:** 🟢 **Online** {latency} ms
+        📍 **Location:** inida: local)
+🖥️ **FQDN:** `localhost` (Port: 8006)",
         color=0x2400ff
     )
     
     embed.add_field(
-        name="🔥 Memory Usage",
+        name="💾 **Memory:**",
         value=f"Used: {system_stats['used_memory']} / Total: {system_stats['total_memory']}",
         inline=False
     )
     
     embed.add_field(
-        name="💾 Storage Usage",
+        name="💿 **Disk:**",
         value=f"Used: {system_stats['used_disk']} / Total: {system_stats['total_disk']}",
         inline=False
     )
