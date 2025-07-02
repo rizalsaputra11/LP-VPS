@@ -430,20 +430,18 @@ async def node_stats(interaction: discord.Interaction):
     
     embed = discord.Embed(
         title="📊 Panel Node Dashboard",
-        description="**Status:** 🟢 **Online** {latency} ms
-        📍 **Location:** inida: local)
-🖥️ **FQDN:** `localhost` (Port: 8006)",
+        description="Current resource usage of the host system",
         color=0x2400ff
     )
     
     embed.add_field(
-        name="💾 **Memory:**",
+        name="🎞️ Memory Usage",
         value=f"Used: {system_stats['used_memory']} / Total: {system_stats['total_memory']}",
         inline=False
     )
     
     embed.add_field(
-        name="💿 **Disk:**",
+        name="💾 Storage Usage",
         value=f"Used: {system_stats['used_disk']} / Total: {system_stats['total_disk']}",
         inline=False
     )
@@ -964,7 +962,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         
         # Create a DM embed with detailed information
         dm_embed = discord.Embed(
-            description=f"**✅ VPS created successfully. Check your DM for details.**",
+            description=f"**✅ VM created successfully. Check your DM for details.**",
             color=0x2400ff
         )
         
@@ -1235,7 +1233,7 @@ async def restart(interaction: discord.Interaction, container_name: str):
 async def ping(interaction: discord.Interaction):
     latency = round(bot.latency * 1000)
     embed = discord.Embed(
-        title="🏓 Pong!",
+        title="🏓 Ping!",
         description=f"Latency: {latency}ms",
         color=0x00ff00
     )
