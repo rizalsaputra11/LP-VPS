@@ -1135,7 +1135,7 @@ class RewardPlanView(View):
         embed.set_footer(text="Click a button to accept or reject this request.")
 
         view = AcceptRejectView(self.user, plan_text)
-        channel = bot.get_channel(1390651899853930627)
+        channel = bot.get_channel(1390545538239299608)
         if channel:
             await channel.send(embed=embed, view=view)
             await interaction.response.send_message("✅ Your request has been sent. Please wait for approval.", ephemeral=True)
