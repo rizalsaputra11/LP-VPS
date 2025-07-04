@@ -972,7 +972,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         dm_embed.add_field(name="🔥 CPU Cores", value=f"{cpu} cores", inline=True)
         dm_embed.add_field(name="🧊 Container Name", value=container_name, inline=False)
         dm_embed.add_field(name="💾 Storage", value=f"10000 GB (Shared storage)", inline=True)
-        dm_embed.add_field(name="🔒 Password", value="galaxy", inline=False)
+        dm_embed.add_field(name="🔒 Password", value="LPNODES", inline=False)
         
         dm_embed.set_footer(text="Keep this information safe and private!")
         
@@ -1102,10 +1102,10 @@ class RewardPlanView(View):
         select = Select(
             placeholder="Select a reward plan",
             options=[
-                discord.SelectOption(label="Invite Reward: 8 Invites = 16GB", value="5_8"),
-                discord.SelectOption(label="Invite Reward: 15 Invites = 32GB", value="10_16"),
-                discord.SelectOption(label="Boost Reward: 1x Boost = 16GB", value="4_12"),
-                discord.SelectOption(label="Boost Reward (2x Boost = 32GB)", value="5_12"),
+                discord.SelectOption(label="⭐ Invite Reward: 8 Invites = 16GB 0 stock", value="5_8"),
+                discord.SelectOption(label="⭐ Invite Reward: 15 Invites = 32GB 23 stock ", value="10_16"),
+                discord.SelectOption(label="🌟 Boost Reward: 1x Boost = 16GB 0 stock ", value="4_12"),
+                discord.SelectOption(label="Boost Reward (2x Boost = 32GB 23 stock )", value="5_12"),
             ]
         )
         select.callback = self.select_callback
@@ -1135,7 +1135,7 @@ class RewardPlanView(View):
         embed.set_footer(text="Click a button to accept or reject this request.")
 
         view = AcceptRejectView(self.user, plan_text)
-        channel = bot.get_channel(1390545538239299608)
+        channel = bot.get_channel(1390766898903257208)
         if channel:
             await channel.send(embed=embed, view=view)
             await interaction.response.send_message("✅ Your request has been sent. Please wait for approval.", ephemeral=True)
@@ -1256,7 +1256,7 @@ async def list_servers(interaction: discord.Interaction):
         embed = discord.Embed(
             title="**📋 Your VPS Instances",
             description="**You don't have any VPS instances. Use `/deploy` to create one!**",
-            color=0x00aaff
+            color=0x2400ff
         )
         await interaction.followup.send(embed=embed)
         return
@@ -1264,7 +1264,7 @@ async def list_servers(interaction: discord.Interaction):
     embed = discord.Embed(
         title="**📋 Your VPS Instances**",
         description=f"**You have {len(servers)} VPS instance(s)**",
-        color=0x00aaff
+        color=0x2400ff
     )
 
     for server in servers:
