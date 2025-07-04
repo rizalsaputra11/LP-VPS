@@ -1105,7 +1105,7 @@ class RewardPlanView(View):
                 discord.SelectOption(label="Invite Reward: 8 Invites = 16GB", value="5_8"),
                 discord.SelectOption(label="Invite Reward: 15 Invites = 32GB", value="10_16"),
                 discord.SelectOption(label="Boost Reward: 1x Boost = 16GB", value="4_12"),
-                discord.SelectOption(label="Boost Reward (2x Boost = 32GB)", value="4_12"),
+                discord.SelectOption(label="Boost Reward (2x Boost = 32GB)", value="5_12"),
             ]
         )
         select.callback = self.select_callback
