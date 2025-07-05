@@ -1102,10 +1102,10 @@ class RewardPlanView(View):
         select = Select(
             placeholder="Select a reward plan",
             options=[
-                discord.SelectOption(label="⭐ Invite Reward: 8 Invites = 16GB 0 stock", value="5_8"),
-                discord.SelectOption(label="⭐ Invite Reward: 15 Invites = 64GB 23 stock ", value="10_16"),
-                discord.SelectOption(label="🌟 Boost Reward: 1x Boost = 16GB 0 stock ", value="4_12"),
-                discord.SelectOption(label="🌟 Boost Reward: 1x Boost = 64GB 33 stock", value="5_12"),
+                discord.SelectOption(label="⭐ Invite Reward: 8 Invites = 16GB 0 stock", value="8_16"),
+                discord.SelectOption(label="⭐ Invite Reward: 15 Invites = 64GB 23 stock ", value="15_64"),
+                discord.SelectOption(label="🌟 Boost Reward: 1x Boost = 16GB 0 stock ", value="1x_16"),
+                discord.SelectOption(label="🌟 Boost Reward: 1x Boost = 64GB 33 stock", value="2x_64"),
             ]
         )
         select.callback = self.select_callback
