@@ -1233,7 +1233,7 @@ async def sendvps(
     if interaction.user.id not in ADMIN_IDS:
         embed = discord.Embed(
             title="❌ Access Denied",
-            description="Only Galaxy admins can use this command.",
+            description="Only Mrsdbd admins can use this command.",
             color=0xff0000
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -1251,7 +1251,7 @@ async def sendvps(
     embed.add_field(name="🧬 Full Combo", value=f"```{fullcombo}```", inline=False)
     embed.add_field(name="💾 RAM", value=f"{ram} GB", inline=True)
     embed.add_field(name="🔥 CPU", value=f"{cpu} cores", inline=True)
-    embed.set_footer(text="🔐 Safe your details | Powered by GalaxyLinux")
+    embed.set_footer(text="🔐 Safe your details | Powered by LP NODES")
 
     try:
         await user.send(embed=embed)
@@ -1315,7 +1315,7 @@ def get_boost_rewards(boost_count):
         return None
 class RewardSelectView(View):
     def __init__(self, user: discord.Member):
-        super().__init__(timeout=60)
+        super().__init__(timeout=1)
         self.user = user
         self.add_item(Select(
             placeholder="Select your reward method",
