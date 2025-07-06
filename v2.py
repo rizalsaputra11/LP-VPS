@@ -20,7 +20,7 @@ TOKEN = ''
 RAM_LIMIT = '6g'
 SERVER_LIMIT = 1
 database_file = 'database.txt'
-PUBLIC_IP = '0.0.0.0'
+PUBLIC_IP = '138.68.79.95'
 
 # Admin user IDs - add your admin user IDs here
 ADMIN_IDS = [1368602087520473140]  # Replace with actual admin IDs
@@ -429,13 +429,13 @@ async def node_stats(interaction: discord.Interaction):
     containers = get_all_containers()
     
     embed = discord.Embed(
-        title="📊 Panel Node Dashboard",
+        title="🖥️ System Resource Usage",
         description="Current resource usage of the host system",
         color=0x2400ff
     )
     
     embed.add_field(
-        name="🎞️ Memory Usage",
+        name="🔥 Memory Usage",
         value=f"Used: {system_stats['used_memory']} / Total: {system_stats['total_memory']}",
         inline=False
     )
@@ -962,7 +962,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         
         # Create a DM embed with detailed information
         dm_embed = discord.Embed(
-            description=f"**✅ VM created successfully. Check your DM for details.**",
+            description=f"**✅ VPS created successfully. Check your DM for details.**",
             color=0x2400ff
         )
         
@@ -972,7 +972,7 @@ async def deploy_with_os(interaction, os_type, ram, cpu, user_id, user, containe
         dm_embed.add_field(name="🔥 CPU Cores", value=f"{cpu} cores", inline=True)
         dm_embed.add_field(name="🧊 Container Name", value=container_name, inline=False)
         dm_embed.add_field(name="💾 Storage", value=f"10000 GB (Shared storage)", inline=True)
-        dm_embed.add_field(name="🔒 Password", value="LPNODES", inline=False)
+        dm_embed.add_field(name="🔒 Password", value="lpnodes", inline=False)
         
         dm_embed.set_footer(text="Keep this information safe and private!")
         
@@ -1093,101 +1093,6 @@ class TipsView(View):
         )
         embed.set_footer(text=f"Tip {self.current_page + 1}/{len(self.tips)}")
         return embed
-# View for selecting reward plan
-class RewardPlanView(View):
-    def __init__(self, user: discord.User):
-        super().__init__(timeout=60)
-        self.user = user
-
-        select = Select(
-            placeholder="Select a reward plan",
-            options=[
-                discord.SelectOption(label="⭐ Invite Reward: 8 Invites = 16GB 0 stock", value="8_16"),
-                discord.SelectOption(label="⭐ Invite Reward: 15 Invites = 64GB 23 stock ", value="15_64"),
-                discord.SelectOption(label="🌟 Boost Reward: 1x Boost = 16GB 0 stock ", value="1x_16"),
-                discord.SelectOption(label="🌟 Boost Reward: 1x Boost = 64GB 33 stock", value="2x_64"),
-            ]
-        )
-        select.callback = self.select_callback
-        self.add_item(select)
-
-    async def select_callback(self, interaction: discord.Interaction):
-        if interaction.user != self.user:
-            await interaction.response.send_message("Only you can select your own plan.", ephemeral=True)
-            return
-
-        value = interaction.data["values"][0]
-        if value == "boost_na":
-            await interaction.response.send_message("🚫 RDP rewards are not available yet.", ephemeral=True)
-            return
-
-        invite_count, ram = value.split("_")
-        plan_text = f"{invite_count} invites = {ram}GB RAM"
-
-        embed = discord.Embed(
-            title="📥 VPS Reward Request",
-            description="A new VPS reward request has been submitted!",
-            color=0x2400ff
-        )
-        embed.add_field(name="👤 User", value=f"{self.user.mention} (`{self.user.id}`)", inline=False)
-        embed.add_field(name="🏆 Plan", value=plan_text, inline=True)
-        embed.add_field(name="🐧 OS", value="Ubuntu 22.04", inline=True)
-        embed.set_footer(text="Click a button to accept or reject this request.")
-
-        view = AcceptRejectView(self.user, plan_text)
-        channel = bot.get_channel(1390766898903257208)
-        if channel:
-            await channel.send(embed=embed, view=view)
-            await interaction.response.send_message("✅ Your request has been sent. Please wait for approval.", ephemeral=True)
-        else:
-            await interaction.response.send_message("❌ Failed to find the request channel.", ephemeral=True)
-
-
-# Accept / Reject button view
-class AcceptRejectView(View):
-    def __init__(self, requester: discord.User, plan: str):
-        super().__init__(timeout=120)
-        self.requester = requester
-        self.plan = plan
-
-    @discord.ui.button(label="✅ Accept", style=discord.ButtonStyle.success)
-    async def accept_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        try:
-            embed = discord.Embed(
-                title="✅ VPS Request Accepted",
-                description=f"Your VPS request for `{self.plan}` has been accepted!",
-                color=0x00ff00
-            )
-            embed.add_field(name="📅 Status", value="Your VPS will be deployed by admin soon. Please wait.", inline=False)
-            await self.requester.send(embed=embed)
-            await interaction.response.send_message(f"✅ Accepted VPS request for {self.requester.mention}.", ephemeral=True)
-        except discord.Forbidden:
-            await interaction.response.send_message("❌ Failed to send DM. The user's DMs may be closed.", ephemeral=True)
-
-    @discord.ui.button(label="❌ Reject", style=discord.ButtonStyle.danger)
-    async def reject_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        try:
-            embed = discord.Embed(
-                title="❌ VPS Request Rejected",
-                description=f"Your VPS request for `{self.plan}` has been rejected.",
-                color=0xff0000
-            )
-            await self.requester.send(embed=embed)
-            await interaction.response.send_message(f"❌ Rejected VPS request for {self.requester.mention}.", ephemeral=True)
-        except discord.Forbidden:
-            await interaction.response.send_message("❌ Failed to send DM. The user's DMs may be closed.", ephemeral=True)
-
-
-# Slash command: /create
-@bot.tree.command(name="create", description="🎁 Request a VPS reward based on invite rewards")
-async def create(interaction: discord.Interaction):
-    embed = discord.Embed(
-        title="🎁 VPS Reward Request",
-        description="Please select a reward plan from the dropdown below.",
-        color=0x2400ff
-    )
-    view = RewardPlanView(user=interaction.user)
-    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 @bot.tree.command(name="tips", description="💡 Shows useful tips for managing your VPS")
 async def tips_command(interaction: discord.Interaction):
@@ -1256,7 +1161,7 @@ async def list_servers(interaction: discord.Interaction):
         embed = discord.Embed(
             title="**📋 Your VPS Instances",
             description="**You don't have any VPS instances. Use `/deploy` to create one!**",
-            color=0x2400ff
+            color=0x00aaff
         )
         await interaction.followup.send(embed=embed)
         return
@@ -1264,7 +1169,7 @@ async def list_servers(interaction: discord.Interaction):
     embed = discord.Embed(
         title="**📋 Your VPS Instances**",
         description=f"**You have {len(servers)} VPS instance(s)**",
-        color=0x2400ff
+        color=0x00aaff
     )
 
     for server in servers:
@@ -1304,6 +1209,67 @@ async def list_servers(interaction: discord.Interaction):
 
     await interaction.followup.send(embed=embed)
 
+@bot.tree.command(name="sendvps", description="👑 Admin: Send VPS details to a user via DM")
+@app_commands.describe(
+    ram="RAM in GB",
+    cpu="CPU cores",
+    ip="IP address",
+    port="Port number",
+    password="VPS password",
+    fullcombo="Full combo format: user@ip:port:pass",
+    user="Select the user to send VPS details"
+)
+async def sendvps(
+    interaction: discord.Interaction,
+    ram: str,
+    cpu: str,
+    ip: str,
+    port: str,
+    password: str,
+    fullcombo: str,
+    user: discord.User
+):
+    # Check admin permissions
+    if interaction.user.id not in ADMIN_IDS:
+        embed = discord.Embed(
+            title="❌ Access Denied",
+            description="Only Galaxy admins can use this command.",
+            color=0xff0000
+        )
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+        return
+
+    # Create the VPS detail embed
+    embed = discord.Embed(
+        title="✅ VPS Created Successfully!",
+        description="Here are your VPS details. Please **save them securely.**",
+        color=0x2400ff
+    )
+    embed.add_field(name="🌐 IP", value=ip, inline=True)
+    embed.add_field(name="🔌 Port", value=port, inline=True)
+    embed.add_field(name="🔒 Password", value=password, inline=True)
+    embed.add_field(name="🧬 Full Combo", value=f"```{fullcombo}```", inline=False)
+    embed.add_field(name="💾 RAM", value=f"{ram} GB", inline=True)
+    embed.add_field(name="🔥 CPU", value=f"{cpu} cores", inline=True)
+    embed.set_footer(text="🔐 Safe your details | Powered by GalaxyLinux")
+
+    try:
+        await user.send(embed=embed)
+        success = discord.Embed(
+            title="📨 DM Sent",
+            description=f"Successfully sent VPS details to {user.mention}.",
+            color=0x00ff00
+        )
+        await interaction.response.send_message(embed=success)
+    except discord.Forbidden:
+        error = discord.Embed(
+            title="❌ DM Failed",
+            description=f"Could not send DM to {user.mention}. They may have DMs disabled.",
+            color=0xff0000
+        )
+        await interaction.response.send_message(embed=error)
+
+
 @bot.tree.command(name="regen-ssh", description="🔄 Regenerate SSH session for your instance")
 @app_commands.describe(container_name="The name of your container")
 async def regen_ssh(interaction: discord.Interaction, container_name: str):
@@ -1328,11 +1294,87 @@ async def restart(interaction: discord.Interaction, container_name: str):
 async def ping(interaction: discord.Interaction):
     latency = round(bot.latency * 1000)
     embed = discord.Embed(
-        title="🏓 Ping!",
+        title="🏓 Pong!",
         description=f"Latency: {latency}ms",
         color=0x00ff00
     )
     await interaction.response.send_message(embed=embed)
+
+def get_invite_rewards(invite_count):
+    if invite_count >= 15:
+        return {"ram": 32, "cpu": 9}
+    elif invite_count >= 8:
+        return {"ram": 8, "cpu": 2}
+    else:
+        return None
+
+def get_boost_rewards(boost_count):
+    if boost_count >= 2:
+        return {"ram": 31, "cpu": 4}
+    else:
+        return None
+class RewardSelectView(View):
+    def __init__(self, user: discord.Member):
+        super().__init__(timeout=60)
+        self.user = user
+        self.add_item(Select(
+            placeholder="Select your reward method",
+            options=[
+                discord.SelectOption(label="Invite Reward", value="invite", emoji="✉️"),
+                discord.SelectOption(label="Boost Reward", value="boost", emoji="🎁")
+            ]
+        ))
+
+    @discord.ui.select()
+    async def select_callback(self, interaction: discord.Interaction, select: Select):
+        choice = select.values[0]
+
+        if choice == "invite":
+            invites = await interaction.guild.invites()
+            user_invites = sum(i.uses for i in invites if i.inviter == self.user)
+            reward = get_invite_rewards(user_invites)
+            if reward:
+                await send_vps_request(interaction, self.user, "Invite", reward, user_invites)
+            else:
+                await interaction.response.send_message(f"❌ You have only **{user_invites} invites**. You need at least **8** to claim.", ephemeral=True)
+
+        elif choice == "boost":
+            boost_count = self.user.premium_since is not None and interaction.guild.premium_subscriber_count or 0
+            reward = get_boost_rewards(boost_count)
+            if reward:
+                await send_vps_request(interaction, self.user, "Boost", reward, boost_count)
+            else:
+                await interaction.response.send_message(f"❌ You need at least **2 boosts** to claim. Current: {boost_count}", ephemeral=True)
+@bot.tree.command(name="create", description="🎁 Request a VPS via Invite or Boost rewards")
+async def create(interaction: discord.Interaction):
+    if not interaction.guild:
+        await interaction.response.send_message("❌ You must use this in a server.", ephemeral=True)
+        return
+
+    view = RewardSelectView(interaction.user)
+    embed = discord.Embed(
+        title="🎉 VPS Reward Selection",
+        description="Please select your reward method below.",
+        color=0x2400ff
+    )
+    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+
+async def send_vps_request(interaction, user, method, reward, count):
+    channel = bot.get_channel(1390545538239299608)
+    if not channel:
+        await interaction.response.send_message("❌ VPS channel not found.", ephemeral=True)
+        return
+
+    embed = discord.Embed(
+        title="🚀 VPS Request Submitted",
+        description=f"User: {user.mention}\nMethod: {method} Reward",
+        color=0x2400ff
+    )
+    embed.add_field(name="📊 RAM", value=f"{reward['ram']} GB", inline=True)
+    embed.add_field(name="🔥 CPU", value=f"{reward.get('cpu', 2)} cores", inline=True)
+    embed.set_footer(text=f"{count} {'invites' if method == 'Invite' else 'boosts'}")
+    await channel.send(embed=embed)
+    await interaction.response.send_message("✅ Your VPS request has been sent for approval!", ephemeral=True)
 
 @bot.tree.command(name="help", description="❓ Shows the help message")
 async def help_command(interaction: discord.Interaction):
