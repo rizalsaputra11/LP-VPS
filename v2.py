@@ -1300,31 +1300,23 @@ async def ping(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed)
 
-def get_invite_rewards(invite_count):
-    if invite_count >= 15:
-        return {"ram": 32, "cpu": 9}
-    elif invite_count >= 8:
-        return {"ram": 8, "cpu": 2}
-    else:
-        return None
+REWARD_CHANNEL_ID = 1390766898903257208  # Channel for reward request
 
-def get_boost_rewards(boost_count):
-    if boost_count >= 2:
-        return {"ram": 31, "cpu": 4}
-    else:
-        return None
-class RewardSelectView(View):
-    def __init__(self, user: discord.Member):
-        super().__init__(timeout=1)
+# 🎯 View for selecting reward plan
+class RewardPlanView(View):
+    def __init__(self, user: discord.User):
+        super().__init__(timeout=60)
         self.user = user
-        self.add_item(Select(
-            placeholder="Select your reward method",
-            options=[
-                discord.SelectOption(label="Invite Reward", value="invite", emoji="✉️"),
-                discord.SelectOption(label="Boost Reward", value="boost", emoji="🎁")
-            ]
-        ))
 
+        select = Select(
+            placeholder="🎯 Select your VPS reward plan",
+            options=[
+                discord.SelectOption(label="🎁 8 Invites = 16GB RAM", value="inv_8_16"),
+                discord.SelectOption(label="🏆 15 Invites = 32GB RAM", value="inv_15_32"),
+                discord.SelectOption(label="🚀 1x Boost = 16GB RAM", value="boost_1_16"),
+                discord.SelectOption(label="🚀 2x Boost = 32GB RAM", value="boost_2_32"),
+            ]
+        )
     @discord.ui.select()
     async def select_callback(self, interaction: discord.Interaction, select: Select):
         choice = select.values[0]
