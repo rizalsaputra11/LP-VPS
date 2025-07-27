@@ -8,6 +8,9 @@ cd LP-VPS
 apt install docker.io && apt install pip && apt install pip && apt install systemctl -y
 ```
 ```
+systemctl start docker
+```
+```
 pip install -r requirements.txt
 ```
 
