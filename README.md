@@ -4,8 +4,9 @@ git clone https://github.com/mrsdbd1/LP-VPS
 ```
 cd LP-VPS
 ```
-``` systemctl start docker```
-
+```
+apt install docker.io && apt install pip && apt install pip && apt install systemctl -y
+```
 ```
 pip install -r requirements.txt
 ```
