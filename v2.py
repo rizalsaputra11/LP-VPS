@@ -327,7 +327,7 @@ async def change_status():
         else:
             instance_count = 0
 
-        status = f" LP NODES{instance_count} VPS"
+        status = f" LP NODES {instance_count} VPS"
         await bot.change_presence(activity=discord.Game(name=status))
     except Exception as e:
         print(f"Failed to update status: {e}")
@@ -381,7 +381,7 @@ async def nodedmin(interaction: discord.Interaction):
                 color=0x2400ff
             )
             field_count = 0
-            
+        
         if len(parts) >= 8:
             user, container_name, ssh_command, ram, cpu, creator, os_type, expiry = parts
             stats = get_container_stats(container_name)
@@ -430,7 +430,7 @@ async def node_stats(interaction: discord.Interaction):
     
     embed = discord.Embed(
         title="📊 Panel Node Dashboard",
-        description="📡 Displaying status for **2** nodes ram use",
+        description="📡 lp nodes",
         color=0x2400ff
     )
     
