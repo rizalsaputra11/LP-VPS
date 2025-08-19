@@ -376,12 +376,12 @@ async def nodedmin(interaction: discord.Interaction):
         if field_count >= 25:
             embeds.append(current_embed)
             current_embed = discord.Embed(
-                title="📊 All VPS (Continued)",
-       nstance( description="Detailed information about all VPS instances",
+                title="📊 All VPS Instances (Continued)",
+                description="Detailed information about all VPS instances",
                 color=0x2400ff
             )
             field_count = 0
-        
+            
         if len(parts) >= 8:
             user, container_name, ssh_command, ram, cpu, creator, os_type, expiry = parts
             stats = get_container_stats(container_name)
