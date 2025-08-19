@@ -250,7 +250,7 @@ class ConfirmView(View):
                     f.write('')
                     
                 embed = discord.Embed(
-                    title=" All VPS Instances Deleted",
+                    title=" All VPS Deleted",
                     description=f"Successfully deleted {deleted_count} VPS instances.",
                     color=0x2400ff
                 )
@@ -327,7 +327,7 @@ async def change_status():
         else:
             instance_count = 0
 
-        status = f"🔮 Watching  Over {instance_count} VM's"
+        status = f" LP NODES{instance_count} VPS"
         await bot.change_presence(activity=discord.Game(name=status))
     except Exception as e:
         print(f"Failed to update status: {e}")
@@ -376,8 +376,8 @@ async def nodedmin(interaction: discord.Interaction):
         if field_count >= 25:
             embeds.append(current_embed)
             current_embed = discord.Embed(
-                title="📊 All VPS Instances (Continued)",
-                description="Detailed information about all VPS instances",
+                title="📊 All VPS (Continued)",
+       nstance( description="Detailed information about all VPS instances",
                 color=0x2400ff
             )
             field_count = 0
@@ -429,8 +429,8 @@ async def node_stats(interaction: discord.Interaction):
     containers = get_all_containers()
     
     embed = discord.Embed(
-        title="🖥️ System Resource Usage",
-        description="Current resource usage of the host system",
+        title="📊 Panel Node Dashboard",
+        description="📡 Displaying status for **2** nodes ram use",
         color=0x2400ff
     )
     
@@ -447,7 +447,7 @@ async def node_stats(interaction: discord.Interaction):
     )
     
     embed.add_field(
-        name=f"🧊 VPS Instances ({len(containers)})",
+        name=f"💙 VPS ({len(containers)})",
         value="List of all VPS instances and their status:",
         inline=False
     )
@@ -1159,17 +1159,17 @@ async def list_servers(interaction: discord.Interaction):
 
     if not servers:
         embed = discord.Embed(
-            title="**📋 Your VPS Instances",
+            title="📋 Your VPS",
             description="**You don't have any VPS instances. Use `/deploy` to create one!**",
-            color=0x00aaff
+            color=0x2400ff
         )
         await interaction.followup.send(embed=embed)
         return
 
     embed = discord.Embed(
-        title="**📋 Your VPS Instances**",
+        title="📋 Your VPS",
         description=f"**You have {len(servers)} VPS instance(s)**",
-        color=0x00aaff
+        color=0x2400ff
     )
 
     for server in servers:
