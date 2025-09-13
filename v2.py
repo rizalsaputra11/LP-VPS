@@ -1,5 +1,6 @@
 import subprocess
 import discord
+import paramiko
 import random
 import string
 import os
